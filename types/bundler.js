@@ -58,6 +58,7 @@ class Bundler extends HTTPCompiler {
             stream: require.resolve('stream-browserify'),
             path: require.resolve('path-browserify'),
             assert: require.resolve('assert-browserify'),
+            'process/browser': require.resolve('process/browser.js'),
             util: require.resolve('util/'),
             fs: false,
             http: false,
@@ -110,6 +111,7 @@ class Bundler extends HTTPCompiler {
             'process.env': JSON.stringify(process.env)
           }),
           new webpack.ProvidePlugin({
+            process: require.resolve('process/browser.js'),
             Buffer: ['buffer', 'Buffer']
           }),
           new webpack.IgnorePlugin({
@@ -302,6 +304,10 @@ class Bundler extends HTTPCompiler {
     console.log(`[BUNDLER] cache.manifest generated with ${files.length} files.`);
   }
 
+  /**
+   * Generate a manifest.json file for PWA support.
+   * @param {string} outputPath Path to the manifest file (default: 'assets/manifest.json')
+   */
   async generateWebManifest (outputPath = path.resolve('assets/manifest.json')) {
     const manifest = {
       name: this.site.name,
