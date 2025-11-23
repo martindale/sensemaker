@@ -53,8 +53,7 @@ class Bundler extends HTTPCompiler {
         },
         resolve: {
           fallback: {
-            crypto: path.resolve(__dirname, '../scripts/crypto-shim'),
-            ecc: path.resolve(__dirname, '../scripts/ecc-shim'),
+            crypto: require.resolve('crypto-browserify'),
             stream: require.resolve('stream-browserify'),
             path: require.resolve('path-browserify'),
             assert: require.resolve('assert-browserify'),
